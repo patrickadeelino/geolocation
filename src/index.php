@@ -9,4 +9,4 @@ $container->addDefinitions(require_once __DIR__ . '/Infra/Bootstrap/ContainerDef
 $container = $container->build();
 
 $consumer = $container->get(RawIpDataConsumer::class);
-$consumer->run();
+$consumer->consume();

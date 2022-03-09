@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Application\Consumers\ValueObjects;
+namespace Application\ValueObjects;
 
 use PHPUnit\Framework\TestCase;
 

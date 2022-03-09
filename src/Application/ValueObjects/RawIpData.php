@@ -13,8 +13,8 @@ class RawIpData
         $decodedPayload = $this->decodedPayload($encodedPayload);
 
         $this->ip = $this->extractPayloadIp($decodedPayload);
-        $this->timestamp = $this->extractPayloadTimestamp($decodedPayload);
         $this->clientId = $this->extractPayloadClientId($decodedPayload);
+        $this->timestamp = $this->extractPayloadTimestamp($decodedPayload);
     }
 
     public function ip(): string
@@ -37,7 +37,7 @@ class RawIpData
         $decodedPayload = json_decode($encodedPayload, true);
 
         if (!is_array($decodedPayload)) {
-            throw new \InvalidArgumentException(sprintf('Invalid payload (%s) parameter provided', $encodedPayload));
+            throw new \InvalidArgumentException(sprintf('Invalid payload (%s) provided', $encodedPayload));
         }
 
         return $decodedPayload;
