@@ -1,12 +1,12 @@
 <?php
 
-namespace Application\Consumers;
+namespace Application;
 
-use Application\Consumers\ValueObjects\RawIpData;
-use Infra\Http\IpGeolocation\IpGeolocationProvider;
+use Application\ValueObjects\RawIpData;
+use Infra\Services\IpGeolocation\IpGeolocationProvider;
 use RdKafka\KafkaConsumer;
 
-class RawIpConsumer
+class RawIpDataConsumer
 {
     public function __construct(
         private readonly KafkaConsumer $kafkaConsumer,

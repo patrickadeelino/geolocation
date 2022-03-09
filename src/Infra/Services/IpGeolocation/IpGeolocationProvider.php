@@ -1,8 +1,8 @@
 <?php
 
-namespace Infra\Http\IpGeolocation;
+namespace Infra\Services\IpGeolocation;
 
-use Application\Consumers\ValueObjects\RawIpData;
+use Application\ValueObjects\RawIpData;
 
 interface IpGeolocationProvider
 {

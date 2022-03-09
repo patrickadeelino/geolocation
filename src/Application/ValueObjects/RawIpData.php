@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Consumers\ValueObjects;
+namespace Application\ValueObjects;
 
 class RawIpData
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Application\Producers;
+namespace Application;
 
-use Application\Consumers\ValueObjects\RawIpData;
-use Infra\Http\IpGeolocation\IpGeolocationOutput;
-use Infra\Http\IpGeolocation\IpGeolocationProvider;
+use Application\ValueObjects\RawIpData;
+use Infra\Services\IpGeolocation\IpGeolocationOutput;
+use Infra\Services\IpGeolocation\IpGeolocationProvider;
 
-class IpGeolocationProducer implements IpGeolocationProvider
+class IpGeolocationDataProducer implements IpGeolocationProvider
 {
     public function getIpGeolocation(RawIpData $rawIpData): IpGeolocationOutput
     {

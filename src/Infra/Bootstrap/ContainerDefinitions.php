@@ -1,13 +1,13 @@
 <?php
 
-use Application\Consumers\RawIpConsumer;
-use Application\Producers\IpGeolocationProducer;
+use Application\RawIpDataConsumer;
+use Application\IpGeolocationDataProducer;
 use Psr\Container\ContainerInterface;
 use RdKafka\Conf;
 use RdKafka\KafkaConsumer;
 
 return [
-    RawIpConsumer::class => DI\Factory(function (ContainerInterface $container) {
+    RawIpDataConsumer::class => DI\Factory(function (ContainerInterface $container) {
         $config = $container->get(Conf::class);
 
         $inputTopic = getenv('INPUT_TOPIC') !== false ? getenv('INPUT_TOPIC') : 'input-topic';
@@ -15,7 +15,7 @@ return [
         $kafkaConsumer = new KafkaConsumer($config);
         $kafkaConsumer->subscribe([$inputTopic]);
 
-        return new RawIpConsumer($kafkaConsumer, new IpGeolocationProducer());
+        return new RawIpDataConsumer($kafkaConsumer, new IpGeolocationDataProducer());
     }),
     Conf::class => DI\Factory(function (ContainerInterface $container) {
         $config = new Conf();
