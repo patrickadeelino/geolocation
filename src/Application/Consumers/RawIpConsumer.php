@@ -3,13 +3,18 @@
 namespace Application\Consumers;
 
 use Application\Consumers\ValueObjects\RawIpData;
+use Infra\Http\IpGeolocation\IpGeolocationProvider;
 use RdKafka\KafkaConsumer;
 
 class RawIpConsumer
 {
-    public function __construct(private readonly KafkaConsumer $kafkaConsumer) {}
+    public function __construct(
+        private readonly KafkaConsumer $kafkaConsumer,
+        private readonly IpGeolocationProvider $geolocationProducer
+    ) {
+    }
 
-    public function run()
+    public function run() : void
     {
         while (true) {
             $message = $this->kafkaConsumer->consume(120 * 1000);
@@ -23,6 +28,17 @@ class RawIpConsumer
 
     private function sendToGeolocationProducer(string $payload) : void
     {
-        $rawIpData = new RawIpData($payload);
+        try {
+            $rawIpData = new RawIpData($payload);
+
+            $this->geolocationProducer->getIpGeolocation($rawIpData);
+
+            // recebe producer
+            // manda
+            // recebe output
+            // envia para o topico de output
+        } catch (\Throwable $exception) {
+            fwrite(STDOUT, $exception->getMessage() . " - " . $exception->getTraceAsString() . "\n");
+        }
     }
 }

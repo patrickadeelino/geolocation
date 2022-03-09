@@ -37,7 +37,7 @@ class RawIpData
         $decodedPayload = json_decode($encodedPayload, true);
 
         if (!is_array($decodedPayload)) {
-            throw new \InvalidArgumentException('Invalid payload parameter provided');
+            throw new \InvalidArgumentException(sprintf('Invalid payload (%s) parameter provided', $encodedPayload));
         }
 
         return $decodedPayload;

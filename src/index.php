@@ -6,14 +6,9 @@ use Application\Consumers\RawIpConsumer;
 use RdKafka\Conf;
 use RdKafka\KafkaConsumer;
 
-$config = new Conf();
-$config->set('group.id', 'geolocation-group');
-$config->set('metadata.broker.list', 'kafka:9092');
-$config->set('auto.offset.reset', 'earliest');
+$container = new DI\ContainerBuilder();
+$container->addDefinitions(require_once __DIR__ . '/Infra/Bootstrap/ContainerDefinitions.php');
+$container = $container->build();
 
-$kafkaConsumer = new KafkaConsumer($config);
-$kafkaConsumer->subscribe(['test-input']);
-
-$consumer = new RawIpConsumer($kafkaConsumer);
-
+$consumer = $container->get(RawIpConsumer::class);
 $consumer->run();

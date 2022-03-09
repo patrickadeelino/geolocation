@@ -5,8 +5,12 @@ services:
     build:
       context: .docker
     entrypoint: "php src/index.php"
+    env_file:
+      - .docker/.env
     volumes:
       - ".:/var/www"
+    depends_on:
+      - kafka
     networks:
       - geo-network
 
