@@ -3,13 +3,11 @@ version: '3.7'
 services:
   geolocation:
     build:
-      context: .docker
-    entrypoint: "php src/index.php"
+      context: .
     env_file:
-      - .docker/.env
-    volumes:
-      - ".:/var/www"
+      - .env
     depends_on:
+      - redis
       - kafka
     networks:
       - geo-network

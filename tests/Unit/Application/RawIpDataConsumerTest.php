@@ -19,7 +19,7 @@ class RawIpDataConsumerTest extends TestCase
         $ipGeolocationProducer = $this->createMock(IpGeolocationDataProducer::class);
         $ipGeolocationProducer->expects($this->once())
                                ->method('produceIpGeolocation')
-                               ->with(new RawIpData($kafkaMessage->payload));
+                               ->with(new RawIpData($kafkaMessage->payload, $kafkaMessage->timestamp));
 
         $consumer = new RawIpDataConsumer($kafkaConsumer, $ipGeolocationProducer);
         $consumer->consume(false);
@@ -29,7 +29,8 @@ class RawIpDataConsumerTest extends TestCase
     {
         $kafkaMessage = new Message();
         $kafkaMessage->err = RD_KAFKA_RESP_ERR_NO_ERROR;
-        $kafkaMessage->payload = '{"ip": "127.0.0.1", "clientId": 1, "timestamp": 12390238983}';
+        $kafkaMessage->payload = '{"ip": "127.0.0.1", "clientId": 1}';
+        $kafkaMessage->timestamp = time();
 
         return $kafkaMessage;
     }

@@ -22,17 +22,17 @@ class RawIpDataConsumer
         do {
             $message = $this->kafkaConsumer->consume(30 * 1000);
             match ($message->err) {
-                RD_KAFKA_RESP_ERR_NO_ERROR       => $this->produceIpGeolocation($message->payload),
+                RD_KAFKA_RESP_ERR_NO_ERROR       => $this->produceIpGeolocation($message->payload, $message->timestamp),
                 RD_KAFKA_RESP_ERR__TIMED_OUT     => fwrite(STDOUT, "Timed out\n"),
                 RD_KAFKA_RESP_ERR__PARTITION_EOF => fwrite(STDOUT, "No more messages; will wait for more\n"),
             };
         } while ($mustBlockProcess);
     }
 
-    private function produceIpGeolocation(string $payload) : void
+    private function produceIpGeolocation(string $payload, int $timestamp) : void
     {
         try {
-            $rawIpData = new RawIpData($payload);
+            $rawIpData = new RawIpData($payload, $timestamp);
 
             $this->ipGeolocationProducer->produceIpGeolocation($rawIpData);
         } catch (\Throwable $exception) {

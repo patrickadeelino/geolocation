@@ -26,7 +26,7 @@ class IPStackProviderTest extends TestCase
         $ipStackProvider = new IPStackProviderAdapter($httpClientMock);
 
         $ipStackProvider->getIpGeolocation(
-            new RawIpData('{"ip": "192.158.1.38", "clientId": 1, "timestamp": 12390238983}')
+            new RawIpData('{"ip": "192.158.1.38", "clientId": 1}', time())
         );
     }
 
@@ -43,7 +43,7 @@ class IPStackProviderTest extends TestCase
 
         $ipStackProvider = new IPStackProviderAdapter($httpClientMock);
         $geolocationOutput = $ipStackProvider->getIpGeolocation(
-            new RawIpData('{"ip": "192.158.1.38", "clientId": 1, "timestamp": 12390238983}')
+            new RawIpData('{"ip": "192.158.1.38", "clientId": 1}', time())
         );
 
         $this->assertEquals($ipStackSuccessResponse['city'], $geolocationOutput->city);

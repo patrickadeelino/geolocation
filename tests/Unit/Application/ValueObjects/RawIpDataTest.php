@@ -15,7 +15,7 @@ class RawIpDataTest extends TestCase
     {
        $this->expectException(\InvalidArgumentException::class);
 
-        new RawIpData($invalidPayload);
+        new RawIpData($invalidPayload, 1);
     }
 
     public function testShouldParseDataWhenPayloadIsValid()
@@ -23,13 +23,13 @@ class RawIpDataTest extends TestCase
         $ip        = "127.0.0.1";
         $clientId  = 1;
         $timestamp = time();
-        $validPayload = sprintf('{"ip": "%s", "clientId": %d, "timestamp": %d}', $ip, $clientId, $timestamp);
+        $validPayload = sprintf('{"ip": "%s", "clientId": %d}', $ip, $clientId);
 
-        $rawIpData = new RawIpData($validPayload);
+        $rawIpData = new RawIpData($validPayload, $timestamp);
 
         $this->assertEquals($rawIpData->ip(), $ip);
         $this->assertEquals($rawIpData->clientId(), $clientId);
-        $this->assertEquals($rawIpData->timestamp(), $timestamp);
+        $this->assertEquals($rawIpData->timestamp, $timestamp);
     }
 
     public function invalidPayloadProvider() : array
@@ -42,14 +42,11 @@ class RawIpDataTest extends TestCase
                 '',
             ],
             'payload with invalid ip' => [
-                '{"ip": "127.0.1", "clientId": 1, "timestamp": 12390238983}',
+                '{"ip": "127.0.1", "clientId": 1}',
             ],
             'payload without clientId' => [
-                '{"ip": "127.0.0.1", "clientId": 1}',
+                '{"ip": "127.0.0.1"}',
             ],
-            'payload without timestamp' => [
-                '{"ip": "127.0.0.1", "timestamp": 12390238983}',
-            ]
         ];
     }
 }

@@ -11,7 +11,7 @@ class OutputPayloadAssembler
     {
         return json_encode([
             'ip' => $rawIpData->ip(),
-            'timestamp' => $rawIpData->timestamp(),
+            'timestamp' => $rawIpData->timestamp,
             'clientId' => $rawIpData->clientId(),
             'latitude' => $geolocationOutput->latitude,
             'longitude' => $geolocationOutput->longitude,

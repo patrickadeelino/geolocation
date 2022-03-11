@@ -12,6 +12,9 @@
             "name": "patrick.adelino"
         }
     ],
+    "scripts": {
+        "test": "./vendor/bin/phpunit --testdox"
+    },
     "require": {
         "ext-rdkafka": "*",
         "php-di/php-di": "^6.3",

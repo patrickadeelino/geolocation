@@ -49,7 +49,7 @@ class IpGeolocationDataProducerTest extends TestCase
 
     private function getRawIpData(): RawIpData
     {
-        return new RawIpData('{"ip": "192.168.105.10", "clientId": 1, "timestamp": 1646919533}');
+        return new RawIpData('{"ip": "192.168.105.10", "clientId": 1}', time());
     }
 
     private function getGeolocationOutput(): IpGeolocationOutput

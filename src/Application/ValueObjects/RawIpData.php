@@ -6,25 +6,18 @@ class RawIpData
 {
     private string $ip;
     private int $clientId;
-    private int $timestamp;
 
-    public function __construct(string $encodedPayload)
+    public function __construct(string $encodedPayload, public readonly int $timestamp)
     {
         $decodedPayload = $this->decodedPayload($encodedPayload);
 
         $this->ip = $this->extractPayloadIp($decodedPayload);
         $this->clientId = $this->extractPayloadClientId($decodedPayload);
-        $this->timestamp = $this->extractPayloadTimestamp($decodedPayload);
     }
 
     public function ip(): string
     {
         return $this->ip;
-    }
-
-    public function timestamp(): int
-    {
-        return $this->timestamp;
     }
 
     public function clientId(): int
@@ -63,16 +56,5 @@ class RawIpData
         }
 
         return (int)$clientId;
-    }
-
-    private function extractPayloadTimestamp(array $decodedPayload): int
-    {
-        $timestamp = $decodedPayload['timestamp'] ?? null;
-
-        if ($timestamp === null) {
-            throw new \InvalidArgumentException('Invalid timestamp provided');
-        }
-
-        return (int)$timestamp;
     }
 }

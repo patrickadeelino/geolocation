@@ -11,4 +11,12 @@ RUN pecl install rdkafka &&  \
     docker-php-ext-enable rdkafka && \
     docker-php-ext-enable redis
 
-RUN chown -R www-data:www-data /var/www
+COPY composer.* ./
+
+RUN php composer.phar install
+
+COPY . .
+
+RUN chown -R www-data:www-data .
+
+ENTRYPOINT ["php", "src/index.php"]
