@@ -40,3 +40,10 @@ This application uses PHP 8 e Kafka to translate IPs into geographical locations
    }
 ### Run unit tests
 `./bin/unit-tests.sh`
+
+
+##### To do:
+* Implement logs using syslog pattern.
+* Implement [phpstan](https://github.com/phpstan/phpstan) 
+* Implement CI/CD pipeline.
+* Test coverage report.
