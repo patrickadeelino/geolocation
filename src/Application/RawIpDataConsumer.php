@@ -20,7 +20,7 @@ class RawIpDataConsumer
     public function consume(bool $mustBlockProcess = true) : void
     {
         do {
-            $message = $this->kafkaConsumer->consume(120 * 1000);
+            $message = $this->kafkaConsumer->consume(30 * 1000);
             match ($message->err) {
                 RD_KAFKA_RESP_ERR_NO_ERROR       => $this->produceIpGeolocation($message->payload),
                 RD_KAFKA_RESP_ERR__TIMED_OUT     => fwrite(STDOUT, "Timed out\n"),

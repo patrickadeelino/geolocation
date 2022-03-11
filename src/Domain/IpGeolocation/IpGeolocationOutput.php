@@ -1,6 +1,6 @@
 <?php
 
-namespace Infra\Services\IpGeolocation;
+namespace Infra\Adapters\IpGeolocation;
 
 /**
  * This class is an DTO responsible for representing the output of geolocation providers

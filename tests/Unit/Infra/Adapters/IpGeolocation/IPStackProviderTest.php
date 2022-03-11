@@ -1,6 +1,6 @@
 <?php
 
-namespace Infra\Services\IpGeolocation;
+namespace Infra\Adapters\IpGeolocation;
 
 use Application\ValueObjects\RawIpData;
 use GuzzleHttp\Client;
@@ -26,7 +26,7 @@ class IPStackProviderTest extends TestCase
         $ipStackProvider = new IPStackProvider($httpClientMock);
 
         $ipStackProvider->getIpGeolocation(
-            new RawIpData('{"ip": "127.0.0.1", "clientId": 1, "timestamp": 12390238983}')
+            new RawIpData('{"ip": "192.158.1.38", "clientId": 1, "timestamp": 12390238983}')
         );
     }
 
@@ -42,9 +42,8 @@ class IPStackProviderTest extends TestCase
         ));
 
         $ipStackProvider = new IPStackProvider($httpClientMock);
-
         $geolocationOutput = $ipStackProvider->getIpGeolocation(
-            new RawIpData('{"ip": "127.0.0.1", "clientId": 1, "timestamp": 12390238983}')
+            new RawIpData('{"ip": "192.158.1.38", "clientId": 1, "timestamp": 12390238983}')
         );
 
         $this->assertEquals($ipStackSuccessResponse['city'], $geolocationOutput->city);

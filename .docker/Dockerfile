@@ -7,6 +7,8 @@ RUN apt-get update && \
     apt-get install -y git
 
 RUN pecl install rdkafka &&  \
-    docker-php-ext-enable rdkafka
+    pecl install redis &&  \
+    docker-php-ext-enable rdkafka && \
+    docker-php-ext-enable redis
 
 RUN chown -R www-data:www-data /var/www

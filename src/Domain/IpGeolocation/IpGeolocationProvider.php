@@ -1,6 +1,6 @@
 <?php
 
-namespace Infra\Services\IpGeolocation;
+namespace Infra\Adapters\IpGeolocation;
 
 use Application\ValueObjects\RawIpData;
 
