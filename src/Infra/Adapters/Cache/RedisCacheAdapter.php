@@ -1,7 +1,8 @@
 <?php
 
-namespace Infra\Services\Cache;
+namespace Infra\Adapters\Cache;
 
+use Domain\Cache\CacheAdapter;
 use Redis;
 
 class RedisCacheAdapter implements CacheAdapter

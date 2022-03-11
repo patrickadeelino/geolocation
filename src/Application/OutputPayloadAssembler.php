@@ -3,7 +3,7 @@
 namespace Application;
 
 use Application\ValueObjects\RawIpData;
-use Infra\Services\IpGeolocation\IpGeolocationOutput;
+use Domain\IpGeolocation\IpGeolocationOutput;
 
 class OutputPayloadAssembler
 {

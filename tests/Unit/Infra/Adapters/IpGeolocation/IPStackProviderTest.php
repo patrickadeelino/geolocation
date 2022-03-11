@@ -23,7 +23,7 @@ class IPStackProviderTest extends TestCase
             [],
             json_encode($ipStackErrorResponse)
         ));
-        $ipStackProvider = new IPStackProvider($httpClientMock);
+        $ipStackProvider = new IPStackProviderAdapter($httpClientMock);
 
         $ipStackProvider->getIpGeolocation(
             new RawIpData('{"ip": "192.158.1.38", "clientId": 1, "timestamp": 12390238983}')
@@ -41,7 +41,7 @@ class IPStackProviderTest extends TestCase
             json_encode($ipStackSuccessResponse)
         ));
 
-        $ipStackProvider = new IPStackProvider($httpClientMock);
+        $ipStackProvider = new IPStackProviderAdapter($httpClientMock);
         $geolocationOutput = $ipStackProvider->getIpGeolocation(
             new RawIpData('{"ip": "192.158.1.38", "clientId": 1, "timestamp": 12390238983}')
         );

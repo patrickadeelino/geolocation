@@ -3,20 +3,20 @@
 namespace Application;
 
 use Application\ValueObjects\RawIpData;
-use Infra\Services\Cache\RedisCacheAdapter;
-use Infra\Services\IpGeolocation\IpGeolocationOutput;
-use Infra\Services\IpGeolocation\IpGeolocationProvider;
-use Infra\Services\IpGeolocation\IPStackProvider;
+use Domain\IpGeolocation\IpGeolocationOutput;
+use Domain\Producer\MessageProducer;
+use Infra\Adapters\Cache\RedisCacheAdapter;
+use Domain\IpGeolocation\IpGeolocationProvider;
+use Infra\Adapters\IpGeolocation\IPStackProviderAdapter;
+use Infra\Adapters\Producer\KafkaProducerAdapter;
 use PHPUnit\Framework\TestCase;
-use RdKafka\Producer;
-use RdKafka\ProducerTopic;
 
 class IpGeolocationDataProducerTest extends TestCase
 {
     public function testShouldNotSendDataWhenClientAndIpRequestExistsOnCache()
     {
-        $producerSpy = $this->createMock(Producer::class);
-        $producerSpy->expects($this->never())->method('newTopic');
+        $producerSpy = $this->createMock(MessageProducer::class);
+        $producerSpy->expects($this->never())->method('produceMessage');
 
         $geolocationProviderSpy = $this->createMock(IpGeolocationProvider::class);
         $geolocationProviderSpy->expects($this->never())->method('getIpGeolocation');
@@ -35,7 +35,7 @@ class IpGeolocationDataProducerTest extends TestCase
     public function testShouldSendProcessedDataToOutputTopic()
     {
         $geolocationOutput = $this->getGeolocationOutput();
-        $geolocationProvider = $this->createMock(IPStackProvider::class);
+        $geolocationProvider = $this->createMock(IPStackProviderAdapter::class);
         $geolocationProvider->method('getIpGeolocation')->willReturn($geolocationOutput);
 
         $rawIpInput = $this->getRawIpData();
@@ -60,18 +60,15 @@ class IpGeolocationDataProducerTest extends TestCase
     private function buildProducerMock(
         RawIpData $rawIpInput,
         IpGeolocationOutput $geolocationOutput
-    ): Producer {
+    ): MessageProducer {
         $outputPayloadAssembler = new OutputPayloadAssembler();
         $expectedOutputPayload  = $outputPayloadAssembler->assemblyAsJsonEncoded($rawIpInput, $geolocationOutput);
 
-        $kafkaTopic = $this->createMock(ProducerTopic::class);
-        $kafkaTopic->expects($this->once())->method('produce')
-                                           ->with(RD_KAFKA_PARTITION_UA, 0, $expectedOutputPayload);
+        $producer = $this->createMock(KafkaProducerAdapter::class);
+        $producer->expects($this->once())->method('produceMessage')
+                                           ->with($expectedOutputPayload);
 
-        $kafkaProducer = $this->createMock(Producer::class);
-        $kafkaProducer->method('newTopic')->willReturn($kafkaTopic);
-
-        return $kafkaProducer;
+        return $producer;
     }
 
     private function buildCacheKey(RawIpData $rawIpInput): string

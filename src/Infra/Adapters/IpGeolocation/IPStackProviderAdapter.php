@@ -13,7 +13,7 @@ use Psr\Http\Client\ClientInterface;
  *
  * @see https://ipstack.com/documentation
  */
-class IPStackProvider implements IpGeolocationProvider
+class IPStackProviderAdapter implements IpGeolocationProvider
 {
     private const IP_STACK_API_ENDPOINT = 'http://api.ipstack.com';
 

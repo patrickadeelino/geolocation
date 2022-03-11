@@ -1,6 +1,6 @@
 <?php
 
-namespace Infra\Adapters\Cache;
+namespace Domain\Cache;
 
 interface CacheAdapter
 {

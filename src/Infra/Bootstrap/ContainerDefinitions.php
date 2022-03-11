@@ -3,11 +3,13 @@
 use Application\OutputPayloadAssembler;
 use Application\RawIpDataConsumer;
 use Application\IpGeolocationDataProducer;
+use Domain\Producer\MessageProducer;
 use GuzzleHttp\Client;
-use Infra\Services\Cache\CacheAdapter;
-use Infra\Services\Cache\RedisCacheAdapter;
-use Infra\Services\IpGeolocation\IpGeolocationProvider;
-use Infra\Services\IpGeolocation\IPStackProvider;
+use Infra\Adapters\Cache\RedisCacheAdapter;
+use Domain\Cache\CacheAdapter;
+use Domain\IpGeolocation\IpGeolocationProvider;
+use Infra\Adapters\IpGeolocation\IPStackProviderAdapter;
+use Infra\Adapters\Producer\KafkaProducerAdapter;
 use Psr\Container\ContainerInterface;
 use RdKafka\Conf;
 use RdKafka\KafkaConsumer;
@@ -15,25 +17,29 @@ use RdKafka\Producer;
 
 return [
     IpGeolocationDataProducer::class => DI\Factory(function (ContainerInterface $container) {
+        return new IpGeolocationDataProducer(
+            $container->get(IpGeolocationProvider::class),
+            $container->get(MessageProducer::class),
+            $container->get(CacheAdapter::class),
+            new OutputPayloadAssembler()
+        );
+    }),
+    IpGeolocationProvider::class => DI\Factory(function () {
+        $httpClient = new Client();
+
+        return new IPStackProviderAdapter($httpClient);
+    }),
+    MessageProducer::class => DI\Factory(function () {
         $conf = new RdKafka\Conf();
-        $conf->set('log_level', (string) LOG_DEBUG);
+        $conf->set('log_level', (string)LOG_DEBUG);
         $conf->set('debug', 'all');
+
         $kafkaCluster = getenv('KAFKA_CLUSTER') ?: '0.0.0.0:9092';
 
         $kafkaProducer = new Producer($conf);
         $kafkaProducer->addBrokers($kafkaCluster);
 
-        return new IpGeolocationDataProducer(
-            $container->get(IpGeolocationProvider::class),
-            $kafkaProducer,
-            $container->get(CacheAdapter::class),
-            new OutputPayloadAssembler()
-        );
-    }),
-    IpGeolocationProvider::class => DI\Factory(function (ContainerInterface $container) {
-        $httpClient = new Client();
-
-        return new IPStackProvider($httpClient);
+        return new KafkaProducerAdapter($kafkaProducer);
     }),
     CacheAdapter::class => DI\Factory(function (ContainerInterface $container) {
         $redis = new Redis();

@@ -1,9 +1,11 @@
 <?php
 
+namespace Infra\Adapters\Producer;
+
 use Domain\Producer\MessageProducer;
 use RdKafka\Producer;
 
-class KafkaProducer implements MessageProducer
+class KafkaProducerAdapter implements MessageProducer
 {
     public function __construct(private readonly Producer $kafkaProducer)
     {
