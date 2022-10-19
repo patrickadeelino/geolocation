@@ -1,4 +1,4 @@
-name: PHP Composer
+name: geolocation-workflow
 
 on:
   push:
@@ -11,7 +11,6 @@ permissions:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     container:
       image: padelino/geolocation:latest
@@ -33,5 +32,6 @@ jobs:
         run: ./composer.phar install
 
   tests:
-    - name: Run test suite
-       run: ./composer.phar test
+    steps:
+      - name: Run test suite
+        run: ./composer.phar test
