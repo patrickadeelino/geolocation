@@ -13,6 +13,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    container:
+      image: padelino/geolocation:latest
 
     steps:
       - uses: actions/checkout@v3
