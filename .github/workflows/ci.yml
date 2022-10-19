@@ -35,8 +35,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: geolocation
-          working-directory: /tmp
-          path: geolocation.tar
+          path: /tmp/geolocation.tar
 
   tests:
     runs-on: ubuntu-latest
