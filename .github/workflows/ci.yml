@@ -1,0 +1,9 @@
+name: geolocation-workflow
+on: [push]
+jobs:
+  check-application:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./composer.phar install --prefer-dist --no-progress
+      - run: ./composer.phar test
