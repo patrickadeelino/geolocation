@@ -1,8 +1,14 @@
 <?php
 
+namespace Infra\Adapters\Container;
+
 use Psr\Container\ContainerInterface;
 
-class PHPDiContainerInjectionAdapter implements ContainerInterface
+/**
+ * This class decorates PhpDI container adding phpstan generics return behavior.
+ * It will help with the IDE auto complete and fix phpstan error messages "expects Foo\Bar\Class, mixed given".
+ */
+class PHPDiContainerInjectionAdapter implements GenericContainerInterface
 {
     private ContainerInterface $container;
 
