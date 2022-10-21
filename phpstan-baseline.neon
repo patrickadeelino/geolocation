@@ -1,0 +1,86 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method Application\\\\OutputPayloadAssembler\\:\\:assemblyAsJsonEncoded\\(\\) should return string but returns string\\|false\\.$#"
+			count: 1
+			path: src/Application/OutputPayloadAssembler.php
+
+		-
+			message: "#^Match expression does not handle remaining values\\: int\\<min, \\-192\\>\\|int\\<\\-190, \\-186\\>\\|int\\<\\-184, \\-1\\>\\|int\\<1, max\\>$#"
+			count: 1
+			path: src/Application/RawIpDataConsumer.php
+
+		-
+			message: "#^Method Application\\\\ValueObjects\\\\RawIpData\\:\\:decodedPayload\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Application/ValueObjects/RawIpData.php
+
+		-
+			message: "#^Method Application\\\\ValueObjects\\\\RawIpData\\:\\:extractPayloadClientId\\(\\) has parameter \\$decodedPayload with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Application/ValueObjects/RawIpData.php
+
+		-
+			message: "#^Method Application\\\\ValueObjects\\\\RawIpData\\:\\:extractPayloadIp\\(\\) has parameter \\$decodedPayload with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Application/ValueObjects/RawIpData.php
+
+		-
+			message: "#^Method Infra\\\\Adapters\\\\IpGeolocation\\\\IPStackProviderAdapter\\:\\:getGeolocationDataFromAPI\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Infra/Adapters/IpGeolocation/IPStackProviderAdapter.php
+
+		-
+			message: "#^Method Application\\\\IpGeolocationDataProducerTest\\:\\:testShouldNotSendDataWhenClientAndIpRequestExistsOnCache\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/Unit/Application/IpGeolocationDataProducerTest.php
+
+		-
+			message: "#^Method Application\\\\IpGeolocationDataProducerTest\\:\\:testShouldSendProcessedDataToOutputTopic\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/Unit/Application/IpGeolocationDataProducerTest.php
+
+		-
+			message: "#^Method Application\\\\RawIpDataConsumerTest\\:\\:testShouldConsumeMessageAndSendToProducer\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/Unit/Application/RawIpDataConsumerTest.php
+
+		-
+			message: "#^Method Application\\\\ValueObjects\\\\RawIpDataTest\\:\\:invalidPayloadProvider\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Unit/Application/ValueObjects/RawIpDataTest.php
+
+		-
+			message: "#^Method Application\\\\ValueObjects\\\\RawIpDataTest\\:\\:testShouldParseDataWhenPayloadIsValid\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/Unit/Application/ValueObjects/RawIpDataTest.php
+
+		-
+			message: "#^Method Application\\\\ValueObjects\\\\RawIpDataTest\\:\\:testShouldThrowExceptionWhenPayloadIsAInvalidJson\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/Unit/Application/ValueObjects/RawIpDataTest.php
+
+		-
+			message: "#^Method Infra\\\\Adapters\\\\IpGeolocation\\\\IPStackProviderTest\\:\\:ipStackErrorResponseMock\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Unit/Infra/Adapters/IpGeolocation/IPStackProviderTest.php
+
+		-
+			message: "#^Method Infra\\\\Adapters\\\\IpGeolocation\\\\IPStackProviderTest\\:\\:ipStackSuccessResponseMock\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Unit/Infra/Adapters/IpGeolocation/IPStackProviderTest.php
+
+		-
+			message: "#^Method Infra\\\\Adapters\\\\IpGeolocation\\\\IPStackProviderTest\\:\\:testShouldGetGeolocationDataFromIPStackAPI\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/Unit/Infra/Adapters/IpGeolocation/IPStackProviderTest.php
+
+		-
+			message: "#^Method Infra\\\\Adapters\\\\IpGeolocation\\\\IPStackProviderTest\\:\\:testShouldThrowExceptionWithErrorMessageWhenRequestErrorOccurs\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/Unit/Infra/Adapters/IpGeolocation/IPStackProviderTest.php
+
+		-
+			message: "#^Parameter \\#3 \\$body of class GuzzleHttp\\\\Psr7\\\\Response constructor expects Psr\\\\Http\\\\Message\\\\StreamInterface\\|resource\\|string\\|null, string\\|false given\\.$#"
+			count: 2
+			path: tests/Unit/Infra/Adapters/IpGeolocation/IPStackProviderTest.php

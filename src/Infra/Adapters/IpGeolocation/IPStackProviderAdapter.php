@@ -44,7 +44,12 @@ class IPStackProviderAdapter implements IpGeolocationProvider
         $url      = $this->mountApiEndpoint($rawIpData->ip());
         $response = $this->httpClient->sendRequest(new Request('GET', $url));
 
-        return json_decode($response->getBody()->getContents(), true);
+        $data = json_decode($response->getBody()->getContents(), true);
+        if (\is_array($data)) {
+            return $data;
+        }
+
+        return [];
     }
 
     private function mountApiEndpoint(string $ip): string

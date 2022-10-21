@@ -16,7 +16,7 @@ use RdKafka\KafkaConsumer;
 use RdKafka\Producer;
 
 return [
-    IpGeolocationDataProducer::class => DI\Factory(function (ContainerInterface $container) {
+    IpGeolocationDataProducer::class => DI\Factory(function (PHPDiContainerInjectionAdapter $container) {
         return new IpGeolocationDataProducer(
             $container->get(IpGeolocationProvider::class),
             $container->get(MessageProducer::class),
@@ -41,13 +41,13 @@ return [
 
         return new KafkaProducerAdapter($kafkaProducer);
     }),
-    CacheAdapter::class => DI\Factory(function (ContainerInterface $container) {
+    CacheAdapter::class => DI\Factory(function () {
         $redis = new Redis();
         $redis->connect('redis');
 
         return new RedisCacheAdapter($redis);
     }),
-    RawIpDataConsumer::class => DI\Factory(function (ContainerInterface $container) {
+    RawIpDataConsumer::class => DI\Factory(function (PHPDiContainerInjectionAdapter $container) {
         $config = new Conf();
         $config->set('group.id', 'geolocation-group');
         $config->set('metadata.broker.list', 'kafka:9092');
