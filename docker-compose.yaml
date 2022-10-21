@@ -4,6 +4,8 @@ services:
   geolocation:
     build:
       context: .
+    volumes:
+      - "./:/var/www"
     env_file:
       - .env
     depends_on:
