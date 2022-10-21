@@ -6,7 +6,7 @@ use Psr\Container\ContainerInterface;
 
 /**
  * This class decorates PHPDI ContainerInterface adding the phpstan's generic return behavior.
- * It will help with the IDE auto complete and fix phpstan error messages "expects Foo\Bar\Class, mixed given".
+ * It will help with the IDE autocomplete and fix phpstan error messages "expects Foo\Bar\Class, mixed given".
  */
 interface GenericContainerInterface extends ContainerInterface
 {
