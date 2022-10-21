@@ -9,6 +9,7 @@ use GuzzleHttp\Client;
 use Infra\Adapters\Cache\RedisCacheAdapter;
 use Domain\Cache\CacheAdapter;
 use Domain\IpGeolocation\IpGeolocationProvider;
+use Infra\Adapters\Container\GenericContainerInterface;
 use Infra\Adapters\IpGeolocation\IPStackProviderAdapter;
 use Infra\Adapters\Producer\KafkaProducerAdapter;
 use RdKafka\Conf;
