@@ -8,8 +8,5 @@ $container = new DI\ContainerBuilder();
 $container->addDefinitions(require_once __DIR__ . '/Infra/Bootstrap/ContainerDefinitions.php');
 $container = $container->build();
 
-/**
- * @var RawIpDataConsumer $consumer
- */
 $consumer = $container->get(RawIpDataConsumer::class);
 $consumer->consume();

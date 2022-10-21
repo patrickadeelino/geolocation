@@ -3,6 +3,7 @@
 use Application\OutputPayloadAssembler;
 use Application\RawIpDataConsumer;
 use Application\IpGeolocationDataProducer;
+use DI\Container;
 use Domain\Producer\MessageProducer;
 use GuzzleHttp\Client;
 use Infra\Adapters\Cache\RedisCacheAdapter;
@@ -16,7 +17,7 @@ use RdKafka\KafkaConsumer;
 use RdKafka\Producer;
 
 return [
-    IpGeolocationDataProducer::class => DI\Factory(function (GenericContainerInterface $container) {
+    IpGeolocationDataProducer::class => DI\Factory(function (Container $container) {
         return new IpGeolocationDataProducer(
             $container->get(IpGeolocationProvider::class),
             $container->get(MessageProducer::class),
@@ -47,7 +48,7 @@ return [
 
         return new RedisCacheAdapter($redis);
     }),
-    RawIpDataConsumer::class => DI\Factory(function (GenericContainerInterface $container) {
+    RawIpDataConsumer::class => DI\Factory(function (Container $container) {
         $config = new Conf();
         $config->set('group.id', 'geolocation-group');
         $config->set('metadata.broker.list', 'kafka:9092');
