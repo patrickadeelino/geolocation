@@ -26,7 +26,7 @@ class IPStackProviderTest extends TestCase
         $ipStackProvider = new IPStackProviderAdapter($httpClientMock);
 
         $ipStackProvider->getIpGeolocation(
-            new RawIpData('{"ip": "192.158.w1.38", "clientId": 1}', time())
+            new RawIpData('{"ip": "192.158.1.38", "clientId": 1}', time())
         );
     }
 

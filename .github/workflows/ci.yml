@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  check-application:
     runs-on: ubuntu-latest
     container:
       image: padelino/geolocation:latest
